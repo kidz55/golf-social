@@ -2,16 +2,14 @@ import React from 'react';
 import { render } from 'react-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
 import App from './App';
 import theme from './theme';
+import './locales/index';
 
 render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <Container>
-      <App />
-    </Container>
+    <App />
   </ThemeProvider>,
-  document.getElementById('root'),
+  document.getElementById('root')
 );

@@ -1,17 +1,20 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
 import { Provider } from 'react-redux';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 import configureStore from './store/index';
-import Home from './views/Home';
+import Home from './views/sport';
+import Navbar from './components/Navbar';
 
 const store = configureStore();
 const App = () => (
   <Provider store={store}>
     <Router>
-      <Switch>
+      <Navbar />
+      <Container>
         <Route path="/" exact component={Home} />
-      </Switch>
+      </Container>
     </Router>
   </Provider>
 );

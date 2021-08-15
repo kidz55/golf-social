@@ -1,0 +1,10 @@
+{
+    "global": {
+        "title": "The golf social club"
+    },
+    "user": {
+        "profile": "Profile",
+        "account": "Account",
+        "logout": "Logout"
+    }
+}
