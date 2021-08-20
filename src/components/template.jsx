@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -10,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
   const classes = useStyles();
+  const { t } = useTranslation('common');
   return <div className={classes.navbar}>YO</div>;
 };
 

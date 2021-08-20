@@ -3,82 +3,78 @@ import {
 } from 'redux-saga/effects';
 import Api from '../api';
 import { encodeParams } from '../helpers';
-import { setGameList } from './actions/sport';
+import { setEventList, setCurrentEvent } from './actions/event';
+import { setUser } from './actions/user';
+import { events, user } from './reducers/mock';
 
-const mockGames = [
-  {
-    id: 1,
-    host_id: 1,
-    when: 'Sun, 15 Aug 2021 03:13:19',
-    course_id: 1,
-    max_players: 3,
-    players: [],
-    description: 'my first event',
-    title: 'my event title',
-  },
-  {
-    id: 2,
-    host_id: 2,
-    when: 'Sun, 15 Aug 2021 03:13:19',
-    course_id: 2,
-    max_players: 5,
-    players: [],
-    description: 'my second event',
-    title: 'my sec ev title',
-  },
-  {
-    id: 3,
-    host_id: 3,
-    when: 'Sun, 15 Aug 2021 03:13:19',
-    course_id: 3,
-    max_players: 3,
-    players: [],
-    description: 'my third event',
-    title: 'my third title',
-  },
-];
+const mockEvents = events;
 
-export function* fetchGames(action) {
+export function* fetchEvents(action) {
   const { query } = action;
   try {
     const { data: list } = yield call(Api.get, `/Games?${encodeParams(query)}`);
   } catch (error) {
-    yield put(setGameList({ count: 3, rows: mockGames }));
+    yield put(setEventList({ count: 3, rows: mockEvents }));
     yield put({ type: 'Game_REQ_FAILED', error });
   }
 }
 
-export function* updateGame(action) {
-  const { game } = action;
+export function* fetchEvent(action) {
+  const { id } = action;
   try {
-    yield call(Api.put, `/Games/${game.id}`, game);
-    yield put(updateGame(game));
+    const { data: event } = yield call(Api.get, `/event/${id}}`);
+  } catch (error) {
+    yield put(setCurrentEvent(mockEvents[1]));
+    yield put({ type: 'Game_REQ_FAILED', error });
+  }
+}
+
+export function* updateEvent(action) {
+  const { Event } = action;
+  try {
+    yield call(Api.put, `/Events/${Event.id}`, Event);
+    yield put(updateEvent(Event));
   } catch (error) {
     yield put({ type: 'UPDATE_STATUS', status: 'error' });
   }
 }
 
-export function* createGame() {}
+export function* createEvent() {}
 
-export function* deleteGame() {}
+export function* deleteEvent() {}
 
-function* watchFetchGames() {
-  yield takeLatest('GET_GAMES', fetchGames);
+export function* fetchUser(action) {
+  const { id } = action;
+  try {
+    const { data: user } = yield call(Api.get, `/users/${id}}`);
+  } catch (error) {
+    yield put(setUser(user));
+    yield put({ type: 'Game_REQ_FAILED', error });
+  }
 }
 
-function* watchUpdateGame() {
-  yield takeLatest('UPDATE_GAME', updateGame);
+function* watchFetchEvents() {
+  yield takeLatest('GET_EVENTS', fetchEvents);
 }
 
-function* watchAddGame() {
-  yield takeLatest('ADD_GAME', createGame);
+function* watchUpdateEvent() {
+  yield takeLatest('UPDATE_EVENT', updateEvent);
 }
 
-function* watchDeleteGame() {
-  yield takeLatest('DELETE_GAME', deleteGame);
+function* watchAddEvent() {
+  yield takeLatest('CREATE_EVENT', createEvent);
+}
+
+function* watchFetchEvent() {
+  yield takeLatest('GET_EVENT', fetchEvent);
+}
+
+function* watchDeleteEvent() {
+  yield takeLatest('DELETE_EVENT', deleteEvent);
 }
 // notice how we now only export the rootSaga
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
-  yield all([watchFetchGames(), watchUpdateGame(), watchDeleteGame(), watchAddGame()]);
+  yield all([watchFetchEvents(),
+    watchFetchEvent(), watchUpdateEvent(), watchDeleteEvent(), watchAddEvent()]);
 }

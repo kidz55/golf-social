@@ -2,6 +2,15 @@
     "global": {
         "title": "The golf social club"
     },
+    "event": {
+        "join": "Join",
+        "full": "Full",
+        "spot-left": "{{amount}} spot(s) left",
+        "leave": "Leave",
+        "user": {
+            "host": "Hosted by {{name}}"
+        }
+    },
     "user": {
         "profile": "Profile",
         "account": "Account",

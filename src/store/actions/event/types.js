@@ -1,0 +1,5 @@
+export const SET_EVENT_LIST = 'SET_EVENT_LIST';
+export const SET_CURRENT_EVENT = 'SET_CURRENT_EVENT';
+export const UPDATE_EVENT = 'UPDATE_EVENT';
+export const DELETE_EVENT = 'DELETE_EVENT';
+export const CREATE_EVENT = 'CREATE_EVENT';
