@@ -13,6 +13,7 @@
     },
     "user": {
         "profile": "Profile",
+        "login": "login",
         "account": "Account",
         "logout": "Logout"
     }

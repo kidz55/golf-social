@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   footer: {
     display: 'flex',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
 }));
 
@@ -55,13 +55,7 @@ const Detail = () => {
   const { id } = useParams();
   const { t } = useTranslation('common');
   const event = useSelector((state) => state.event.currentEvent);
-  const user = useSelector((state) => state.user.self);
-  const [isAuth, setAuth] = useState(false)
   const [spotLeft, setSpotLeft] = useState(0);
-
-  useEffect(() => {
-    setAuth(!!user)
-  }, [user]);
 
   useEffect(() => {
     dispatch({ type: 'GET_EVENT', id });
@@ -70,7 +64,7 @@ const Detail = () => {
 
   const joinEvent = () => {
     dispatch({ type: 'JOIN_EVENT', id });
-  }
+  };
 
   return (
     <div className={classes.root}>
@@ -108,7 +102,12 @@ const Detail = () => {
         <div className={classes.section}>
           <GroupIcon className={classes.icon} />
           {event?.players.map((player) => (
-            <ButtonBase key={player?.id} className={classes.player} component={Link} to={`/users/${player?.id}`}>
+            <ButtonBase
+              key={player?.id}
+              className={classes.player}
+              component={Link}
+              to={`/users/${player?.id}`}
+            >
               <Avatar src={player?.avatar} />
               <Typography variant="body2" component="small">
                 {player?.username}
@@ -123,7 +122,7 @@ const Detail = () => {
         </Typography>
       </div>
       <div className={classes.footer}>
-        <Button size="big" variant="primary" onClick={joinEvent()}>
+        <Button size="big" variant="primary" onClick={joinEvent}>
           {t('event.join')}
         </Button>
       </div>
