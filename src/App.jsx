@@ -7,6 +7,7 @@ import { ProvideAuth, PrivateRoute } from './plugins/auth';
 import configureStore from './store/index';
 import Home from './views/event';
 import Login from './views/user/Login';
+import Signup from './views/user/Signup';
 import Detail from './views/event/Detail';
 import Navbar from './components/Navbar';
 
@@ -18,9 +19,12 @@ const App = () => (
       <Router>
         <Navbar />
         <Container>
+          <PrivateRoute path="/event/:id">
+            <Detail />
+          </PrivateRoute>
           <Route path="/" exact component={Home} />
-          <PrivateRoute path="/event/:id" component={Detail} />
           <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
         </Container>
       </Router>
     </ProvideAuth>

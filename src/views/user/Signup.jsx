@@ -4,9 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import { useAuth } from '../../plugins/auth';
 import { isRequired, validate } from '../../helpers';
@@ -25,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const Signup = () => {
   const classes = useStyles();
   const { t } = useTranslation('common');
   const auth = useAuth();
@@ -53,7 +50,7 @@ const Login = () => {
     setIsDirty(true);
     if (hasErrors) return;
     try {
-      await auth.signin(form.email, form.password);
+      await auth.signup(form.email, form.password);
     } catch (e) {
       // handle login error
       console.log(e);
@@ -62,7 +59,7 @@ const Login = () => {
 
   return (
     <div className={classes.root}>
-      <h1>{t('login.title')}</h1>
+      <h1>{t('signup.title')}</h1>
       <FormControl className={classes.form}>
         <TextField
           required
@@ -89,17 +86,11 @@ const Login = () => {
           color="primary"
           onClick={login}
         >
-          {t('login.action')}
+          {t('signup.action')}
         </Button>
-        <Typography variant="body1" color="textSecondary" component="small">
-          {t('login.noAccount')}
-          <ButtonBase component={Link} href="/signup">
-            {t('signup.action')}
-          </ButtonBase>
-        </Typography>
       </FormControl>
     </div>
   );
 };
 
-export default hot(module)(Login);
+export default hot(module)(Signup);

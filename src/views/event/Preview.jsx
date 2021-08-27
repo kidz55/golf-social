@@ -48,9 +48,7 @@ const EventPreview = ({ event }) => {
     <Card className={classes.root}>
       <CardActionArea component={Link} to={`/event/${event.id}`}>
         <CardHeader
-          avatar={(
-            <Avatar aria-label="player Name" />
-            )}
+          avatar={<Avatar aria-label="player Name" />}
           title={event.title}
           subheader={event.when}
         />
@@ -63,14 +61,17 @@ const EventPreview = ({ event }) => {
           <Typography variant="body2" color="textSecondary" component="p">
             {event.description}
           </Typography>
-          <Chip icon={<FaceIcon />} label={t('event.spot-left', { amount: spotLeft })} />
+          <Chip
+            icon={<FaceIcon />}
+            label={t('event.spot-left', { amount: spotLeft })}
+          />
         </CardContent>
-        { spotLeft > 0 && (
-        <CardActions>
-          <Button size="big" color="primary">
-            {t('event.join')}
-          </Button>
-        </CardActions>
+        {spotLeft > 0 && (
+          <CardActions>
+            <Button size="medium" variant="contained" color="primary">
+              {t('event.join')}
+            </Button>
+          </CardActions>
         )}
       </CardActionArea>
     </Card>

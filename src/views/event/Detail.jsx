@@ -122,7 +122,12 @@ const Detail = () => {
         </Typography>
       </div>
       <div className={classes.footer}>
-        <Button size="big" variant="primary" onClick={joinEvent}>
+        <Button
+          size="large"
+          variant="contained"
+          color="primary"
+          onClick={joinEvent}
+        >
           {t('event.join')}
         </Button>
       </div>

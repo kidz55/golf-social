@@ -11,9 +11,19 @@
             "host": "Hosted by {{name}}"
         }
     },
+    "login": {
+        "title": "Sign in to the golf social club",
+        "action": "Sign in",
+        "noAccount": "Don't have an account yet ?"
+    },
+    "signup": {
+        "title": "Sign up to the golf social club",
+        "action": "Sign up"
+    },
     "user": {
         "profile": "Profile",
         "login": "login",
+        "signup": "Sign Up",
         "account": "Account",
         "logout": "Logout"
     }

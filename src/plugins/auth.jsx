@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import * as firebase from 'firebase/app';
 import * as firebaseAuth from 'firebase/auth';
 import { Route, Redirect } from 'react-router-dom';
@@ -16,11 +17,11 @@ firebase.initializeApp({
 const authContext = createContext();
 function useProvideAuth() {
   const [user, setUser] = useState(null);
-
+  const [isLoading, setLoading] = useState(true);
+  const auth = firebaseAuth.getAuth();
   const signin = (email, password) =>
     firebaseAuth
-      .getAuth()
-      .signInWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(auth, email, password)
       .then((response) => {
         setUser(response.user);
         return response.user;
@@ -28,32 +29,22 @@ function useProvideAuth() {
 
   const signup = (email, password) =>
     firebaseAuth
-      .getAuth()
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(auth, email, password)
       .then((response) => {
         setUser(response.user);
         return response.user;
       });
 
   const signout = () =>
-    firebaseAuth
-      .getAuth()
-      .signOut()
-      .then(() => {
-        setUser(false);
-      });
+    firebaseAuth.signOut(auth).then(() => {
+      setUser(false);
+    });
 
   const sendPasswordResetEmail = (email) =>
-    firebaseAuth
-      .getAuth()
-      .sendPasswordResetEmail(email)
-      .then(() => true);
+    firebaseAuth.sendPasswordResetEmail(auth, email).then(() => true);
 
-  const confirmPasswordReset = (code, password) =>
-    firebaseAuth
-      .getAuth()
-      .confirmPasswordReset(code, password)
-      .then(() => true);
+  const confirmPasswordReset = (auth, code, password) =>
+    firebaseAuth.confirmPasswordReset(auth, code, password).then(() => true);
 
   useEffect(() => {
     const unsubscribe = firebaseAuth.getAuth().onAuthStateChanged((user) => {
@@ -62,6 +53,7 @@ function useProvideAuth() {
       } else {
         setUser(false);
       }
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);
@@ -73,6 +65,7 @@ function useProvideAuth() {
     signout,
     sendPasswordResetEmail,
     confirmPasswordReset,
+    isLoading,
   };
 }
 
@@ -83,14 +76,17 @@ export function ProvideAuth({ children }) {
 
 export const useAuth = () => useContext(authContext);
 
-export const PrivateRoute = ({ component, path }) => {
-  const auth = useAuth();
+export const PrivateRoute = ({ children, ...rest }) => {
+  let auth = useAuth();
   return (
     <Route
-      path={path}
-      render={({ location }) =>
-        auth.user ? (
-          component
+      {...rest}
+      render={({ location }) => {
+        if (auth.isLoading) {
+          return <CircularProgress color="secondary" />;
+        }
+        return auth.user ? (
+          children
         ) : (
           <Redirect
             to={{
@@ -98,8 +94,8 @@ export const PrivateRoute = ({ component, path }) => {
               state: { from: location },
             }}
           />
-        )
-      }
+        );
+      }}
     />
   );
 };

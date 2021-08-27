@@ -5,11 +5,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useTranslation } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../plugins/auth';
+import { ButtonBase } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,35 +30,31 @@ export default function Navbar() {
   const auth = useAuth();
   const { t } = useTranslation('common');
 
-  const goToProfile = () => {};
-
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography variant="h6" className={classes.title}>
-            {t('global.title')}
+            <ButtonBase color="inherit" component={Link} to="/">
+              {t('global.title')}
+            </ButtonBase>
           </Typography>
+          {auth.isLoading && <CircularProgress color="secondary" />}
           {auth.user ? (
-            <IconButton
+            <ButtonBase
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={goToProfile}
+              component={Link}
+              to={`/users/${auth.user.id}`}
               color="inherit"
             >
-              <AccountCircle />
-            </IconButton>
+              <AccountCircle fontSize="large" />
+            </ButtonBase>
           ) : (
-            <Button color="inherit" component={Link} to="/login">{t('user.login')}</Button>
+            <Button color="inherit" component={Link} to="/login">
+              {t('user.login')}
+            </Button>
           )}
         </Toolbar>
       </AppBar>
