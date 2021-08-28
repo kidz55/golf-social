@@ -1,18 +1,19 @@
 import React from 'react';
+import { hot } from 'react-hot-loader';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
-  navbar: {
+  root: {
     width: '100%',
     backgroundColor: theme.palette.background.paper,
   },
 }));
 
-const Navbar = () => {
+const Create = () => {
   const classes = useStyles();
   const { t } = useTranslation('common');
-  return <div className={classes.navbar}>YO</div>;
+  return <div className={classes.root}>YO YOOO</div>;
 };
 
-export default Navbar;
+export default hot(module)(Create);

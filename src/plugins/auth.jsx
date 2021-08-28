@@ -76,22 +76,22 @@ export function ProvideAuth({ children }) {
 
 export const useAuth = () => useContext(authContext);
 
-export const PrivateRoute = ({ children, ...rest }) => {
+export const PrivateRoute = ({ component: Component, ...rest }) => {
   let auth = useAuth();
   return (
     <Route
       {...rest}
-      render={({ location }) => {
+      render={(props) => {
         if (auth.isLoading) {
           return <CircularProgress color="secondary" />;
         }
         return auth.user ? (
-          children
+          <Component {...props} />
         ) : (
           <Redirect
             to={{
               pathname: '/login',
-              state: { from: location },
+              state: { from: props?.location },
             }}
           />
         );

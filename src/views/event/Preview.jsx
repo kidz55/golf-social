@@ -46,7 +46,7 @@ const EventPreview = ({ event }) => {
   const spotLeft = event.players.length - event.max_players + 1;
   return (
     <Card className={classes.root}>
-      <CardActionArea component={Link} to={`/event/${event.id}`}>
+      <CardActionArea component={Link} to={`/events/${event.id}`}>
         <CardHeader
           avatar={<Avatar aria-label="player Name" />}
           title={event.title}

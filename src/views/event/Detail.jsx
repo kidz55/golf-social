@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -56,7 +56,7 @@ const Detail = () => {
   const { t } = useTranslation('common');
   const event = useSelector((state) => state.event.currentEvent);
   const [spotLeft, setSpotLeft] = useState(0);
-
+  console.log('evnet id', id);
   useEffect(() => {
     dispatch({ type: 'GET_EVENT', id });
     setSpotLeft(event?.max_players - event?.players.length);

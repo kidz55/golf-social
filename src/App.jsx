@@ -2,7 +2,7 @@ import React from 'react';
 import { hot } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import Container from '@material-ui/core/Container';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { ProvideAuth, PrivateRoute } from './plugins/auth';
 import configureStore from './store/index';
 import Home from './views/event';
@@ -10,6 +10,7 @@ import Login from './views/user/Login';
 import Signup from './views/user/Signup';
 import Detail from './views/event/Detail';
 import Navbar from './components/Navbar';
+import Create from './views/event/Create';
 
 const store = configureStore();
 
@@ -19,12 +20,13 @@ const App = () => (
       <Router>
         <Navbar />
         <Container>
-          <PrivateRoute path="/event/:id">
-            <Detail />
-          </PrivateRoute>
-          <Route path="/" exact component={Home} />
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
+          <Switch>
+            <PrivateRoute path="/events/:id" component={Detail} />
+            <PrivateRoute path="/event/create" exact component={Create} />
+            <Route path="/" exact component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
+          </Switch>
         </Container>
       </Router>
     </ProvideAuth>

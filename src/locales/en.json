@@ -5,6 +5,13 @@
     "event": {
         "join": "Join",
         "full": "Full",
+        "create": {
+            "create": "Create party",
+            "when": "When is it happening ?",
+            "players": "How many players (you included) ?",
+            "description": "Add it a description",
+            "course": "Select the course"
+        },
         "spot-left": "{{amount}} spot(s) left",
         "leave": "Leave",
         "user": {

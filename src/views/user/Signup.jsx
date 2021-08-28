@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { useAuth } from '../../plugins/auth';
 import { isRequired, validate } from '../../helpers';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +27,7 @@ const Signup = () => {
   const classes = useStyles();
   const { t } = useTranslation('common');
   const auth = useAuth();
+  const history = useHistory();
   const [form, setForm] = useState({});
   const [isDirty, setIsDirty] = useState(false);
   const [hasErrors, setHasErrors] = useState(false);
@@ -51,6 +53,7 @@ const Signup = () => {
     if (hasErrors) return;
     try {
       await auth.signup(form.email, form.password);
+      history.push('/');
     } catch (e) {
       // handle login error
       console.log(e);
