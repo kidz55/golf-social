@@ -11,6 +11,7 @@ import Signup from './views/user/Signup';
 import Detail from './views/event/Detail';
 import Navbar from './components/Navbar';
 import Create from './views/event/Create';
+import Profile from './views/user/Profile';
 
 const store = configureStore();
 
@@ -24,6 +25,7 @@ const App = () => (
             <PrivateRoute path="/events/:id" component={Detail} />
             <PrivateRoute path="/event/create" exact component={Create} />
             <Route path="/" exact component={Home} />
+            <Route path="/users/:id" component={Profile} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
           </Switch>

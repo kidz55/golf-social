@@ -1,16 +1,22 @@
 const initialState = {
   self: null,
   error: null,
+  isLoading: false,
 };
 
-export default (state = initialState, action) => {
+const user = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_USER':
       return {
         ...state,
         self: action.user,
       };
-    case 'TASK_REQ_FAILED': {
+    case 'SET_LOADING':
+      return {
+        ...state,
+        isLoading: action.isLoading,
+      };
+    case 'SET_ERROR': {
       return {
         ...state,
         error: action.error,
@@ -20,3 +26,5 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default user;
